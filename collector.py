@@ -14,38 +14,25 @@ def collector(coins, mags, n):
         j: the current row (vert)
         m: number of multipliers in our "backpack"
         '''
+
+        # BASE CASES
         if (i, j, m) in memo:
             return memo[(i, j, m)]
 
-
-
-
-        # BASE CASES
         if i == n-1 and j == n-1:
             return 0
-
-
-
-                # coins[n-1][n-1]*m
 
         # RECURSE
 
 
         a, b = -float('inf'), -float('inf')
+
         if i + 1 < n:
             a = DP(i+1, j, 0) + coins[i][j]*2**m
-        # print('\n')
-        # print('i, j: ', (i, j))
-        # print('coin@i, j?: ', coins[i][j])
-        # print('a: ', a)
-        # print('\n')
+
         if j + 1 < n:
             b = DP(i, j+1, m + mags[i][j]) + coins[i][j]*2**m
-        # print('****B****\n')
-        # print('i, j: ', (i, j))
-        # print('coin@i, j?: ', coins[i][j])
-        # print('b: ', b)
-        # print('\n')
+
 
         memo[(i, j, m)] = max(a, b)
         # track which one was max, then make those params the parent param
@@ -81,12 +68,9 @@ def collector(coins, mags, n):
     print('parent dict: ', parent)
     while True:
         out.append((current[0], current[1]))
-        if current not in parent:
+        if current not in parent: # we've finished our looping. break.
             break
-        print('current: ', current)
-        print('parent[current]: ', parent[current])
         current = parent[current]
-    # out.append((n-1, n-1))
     return out
 
 if __name__ == '__main__':
